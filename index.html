@@ -5,8 +5,12 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Dieter Rams inspired colors</title>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css/normalize.min.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slim-select@2.6/dist/slimselect.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+			integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+			crossorigin="anonymous" referrerpolicy="no-referrer">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/2.6.0/slimselect.min.css"
+			integrity="sha512-GvqWM4KWH8mbgWIyvwdH8HgjUbyZTXrCq0sjGij9fDNiXz3vJoy3jCcAaWNekH2rJe4hXVWCJKN+bEW8V7AAEQ=="
+			crossorigin="anonymous" referrerpolicy="no-referrer">
 		<link rel="stylesheet" href="styles.css">
 		<script src="setInitialColorTheme.js" type="module"></script>
 	</head>
@@ -15,7 +19,7 @@
 		<div class="top-row">
 			<div class="title text">Dieter Rams inspired colors</div>
 			<div class="format-picker">
-				<select name="format" id="format" title="Color name format">
+				<select id="format" title="Color name format">
 					<option class="format-option" value="hex6">hex</option>
 					<option class="format-option" selected value="rgb">rgb</option>
 					<option class="format-option" value="prgb">%rgb</option>

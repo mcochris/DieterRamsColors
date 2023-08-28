@@ -5,14 +5,13 @@
  * @todo Highlight color name format to "defaultColorNameFormat" constant on startup (done)
  */
 
-import "./themePicker.js"
+import { themePicker } from "./themePicker.js"
 //	eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //	@ts-ignore
 import { TinyColor, mostReadable } from "https://cdn.jsdelivr.net/npm/@ctrl/tinycolor@4.0/+esm"
 //	eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //	@ts-ignore
-import slimSelect from "https://cdn.jsdelivr.net/npm/slim-select@2.6/+esm"
-import { themePicker } from "./themePicker.js"
+import slimSelect from "https://cdnjs.cloudflare.com/ajax/libs/slim-select/2.6.0/slimselect.es.min.js"
 
 (() => {
 	//	Initialize theme picker
@@ -45,6 +44,7 @@ import { themePicker } from "./themePicker.js"
 		["#c5441f", "#f07032", "#40341f", "#8b8178", "#d9cab8"],
 		["#0d703f", "#f1b73a", "#e6423a", "#5b4a3b", "#d3d8d2"]
 	]
+	const drColorsFlat = drColors.flat()
 
 	const containers = document.querySelectorAll("body .container") as NodeListOf<HTMLDivElement>
 
@@ -86,29 +86,34 @@ import { themePicker } from "./themePicker.js"
 			themePickerButtons[2].style.textDecoration = "underline"
 			//	Third:
 			const color = new TinyColor(bgColor)
-			const newColor = mostReadable(color, drColors.flat())
+			const newColor = mostReadable(color, drColorsFlat)
 			if (typeof newColor.toString("rgb") === "string")
 				[...textElements].forEach(textElement => textElement.style.color = newColor)
 		})
 	}
 
-	//	Define what to do when the the color name format changes
-	function setColorNameFormat(format: string) {
-		if (validColorNameFormats.includes(format)) {
-			// const boxes = document.querySelectorAll(".box:nth-child(n+2)") as NodeListOf<HTMLDivElement>
-			const boxes = document.getElementsByClassName("box") as HTMLCollectionOf<HTMLDivElement>
-				;[...boxes].forEach((box, index) => {
-					const color = new TinyColor(box.style.backgroundColor)
-					const colorString = color.toString(format)
-					if (index === 0)
-						box.style.color = colorString
-					else if (format === "off")
-						box.textContent = ""
-					else
-						box.textContent = colorString
-				})
-		}
-	}
-
 	document.body.hidden = false
+
+	/**
+	 * @description Define what to do when the the color name format changes
+	 * @param format string, the new color name format (e.g. "rgb", "hex6", "off")
+	 * @returns void
+	 * @example setColorNameFormat("rgb")
+	 */
+	function setColorNameFormat(format: string): void {
+		if (validColorNameFormats.includes(format) === false) {
+			console.error(`Invalid color name format: ${format}`)
+			return
+		}
+		[...boxes].forEach(box => {
+			if (format === "off")
+				box.textContent = ""
+			else {
+				const color = new TinyColor(box.style.backgroundColor)
+				const newColor = mostReadable(color, drColorsFlat)
+				box.style.color = newColor.toString(format)
+				box.textContent = newColor.toString(format)
+			}
+		})
+	}
 })()

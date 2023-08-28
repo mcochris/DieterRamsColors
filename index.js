@@ -1,7 +1,6 @@
-import "./themePicker.js";
-import { TinyColor, mostReadable } from "https://cdn.jsdelivr.net/npm/@ctrl/tinycolor@4.0/+esm";
-import slimSelect from "https://cdn.jsdelivr.net/npm/slim-select@2.6/+esm";
 import { themePicker } from "./themePicker.js";
+import { TinyColor, mostReadable } from "https://cdn.jsdelivr.net/npm/@ctrl/tinycolor@4.0/+esm";
+import slimSelect from "https://cdnjs.cloudflare.com/ajax/libs/slim-select/2.6.0/slimselect.es.min.js";
 (() => {
     themePicker();
     new slimSelect({
@@ -24,6 +23,7 @@ import { themePicker } from "./themePicker.js";
         ["#c5441f", "#f07032", "#40341f", "#8b8178", "#d9cab8"],
         ["#0d703f", "#f1b73a", "#e6423a", "#5b4a3b", "#d3d8d2"]
     ];
+    const drColorsFlat = drColors.flat();
     const containers = document.querySelectorAll("body .container");
     containers.forEach((container, outerIndex) => {
         const boxes = container.getElementsByClassName("box");
@@ -52,26 +52,27 @@ import { themePicker } from "./themePicker.js";
             themePickerButtons[1].style.textDecoration = "none";
             themePickerButtons[2].style.textDecoration = "underline";
             const color = new TinyColor(bgColor);
-            const newColor = mostReadable(color, drColors.flat());
+            const newColor = mostReadable(color, drColorsFlat);
             if (typeof newColor.toString("rgb") === "string")
                 [...textElements].forEach(textElement => textElement.style.color = newColor);
         });
     }
-    function setColorNameFormat(format) {
-        if (validColorNameFormats.includes(format)) {
-            const boxes = document.getElementsByClassName("box");
-            [...boxes].forEach((box, index) => {
-                const color = new TinyColor(box.style.backgroundColor);
-                const colorString = color.toString(format);
-                if (index === 0)
-                    box.style.color = colorString;
-                else if (format === "off")
-                    box.textContent = "";
-                else
-                    box.textContent = colorString;
-            });
-        }
-    }
     document.body.hidden = false;
+    function setColorNameFormat(format) {
+        if (validColorNameFormats.includes(format) === false) {
+            console.error(`Invalid color name format: ${format}`);
+            return;
+        }
+        [...boxes].forEach(box => {
+            if (format === "off")
+                box.textContent = "";
+            else {
+                const color = new TinyColor(box.style.backgroundColor);
+                const newColor = mostReadable(color, drColorsFlat);
+                box.style.color = newColor.toString(format);
+                box.textContent = newColor.toString(format);
+            }
+        });
+    }
 })();
 //# sourceMappingURL=index.js.map
