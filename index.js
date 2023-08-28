@@ -4,26 +4,14 @@ import slimSelect from "https://cdn.jsdelivr.net/npm/slim-select@2.6/+esm";
 import { themePicker } from "./themePicker.js";
 (() => {
     themePicker();
-    const select = new slimSelect({
+    new slimSelect({
         select: "#format",
         settings: { showSearch: false },
         events: { afterChange: (newVal) => setColorNameFormat(newVal[0].value) }
     });
     const validColorNameFormats = ["rgb", "prgb", "hex6", "hsl", "hsv", "off"];
     const defaultColorNameFormat = "rgb";
-    select.setSelected(defaultColorNameFormat);
     const themePickerButtons = document.querySelectorAll(".theme-picker button");
-    const boxes = document.body.querySelectorAll(".box:nth-child(n+2)");
-    for (let i = 0; i < boxes.length; i++) {
-        boxes[i].addEventListener('click', e => {
-            const style = window.getComputedStyle(e.target);
-            const bgColor = style.getPropertyValue('background-color');
-            document.body.style.backgroundColor = bgColor;
-            themePickerButtons[0].style.textDecoration = "none";
-            themePickerButtons[1].style.textDecoration = "none";
-            themePickerButtons[2].style.textDecoration = "underline";
-        });
-    }
     const drColors = [
         ["#aab7bf", "#736356", "#bfb1a8", "#ad1d1d", "#261201"],
         ["#84754a", "#3a3124", "#96937d", "#b9ada4", "#0d0000"],
@@ -53,17 +41,34 @@ import { themePicker } from "./themePicker.js";
             }
         });
     });
+    const boxes = document.body.querySelectorAll(".box:nth-child(n+2)");
+    const textElements = document.body.getElementsByClassName("text");
+    for (let i = 0; i < boxes.length; i++) {
+        boxes[i].addEventListener('click', e => {
+            const style = getComputedStyle(e.target);
+            const bgColor = style.getPropertyValue('background-color');
+            document.body.style.backgroundColor = bgColor;
+            themePickerButtons[0].style.textDecoration = "none";
+            themePickerButtons[1].style.textDecoration = "none";
+            themePickerButtons[2].style.textDecoration = "underline";
+            const color = new TinyColor(bgColor);
+            const newColor = mostReadable(color, drColors.flat());
+            if (typeof newColor.toString("rgb") === "string")
+                [...textElements].forEach(textElement => textElement.style.color = newColor);
+        });
+    }
     function setColorNameFormat(format) {
         if (validColorNameFormats.includes(format)) {
-            const boxes = document.querySelectorAll(".box:nth-child(n+2)");
-            [...boxes].forEach(box => {
-                if (format === "off")
+            const boxes = document.getElementsByClassName("box");
+            [...boxes].forEach((box, index) => {
+                const color = new TinyColor(box.style.backgroundColor);
+                const colorString = color.toString(format);
+                if (index === 0)
+                    box.style.color = colorString;
+                else if (format === "off")
                     box.textContent = "";
-                else {
-                    const color = new TinyColor(box.style.backgroundColor);
-                    const colorString = color.toString(format);
+                else
                     box.textContent = colorString;
-                }
             });
         }
     }

@@ -1,7 +1,6 @@
 /**
  * @todo Fix color ID to contrast well with card background color
- * @todo Fix font color to contrast with background color
- * @todo Add custom theme picker https://toolcool-color-picker.mzsoft.org/ (abandoned for card picker)
+ * @todo Fix font color outside of cards (e..g title, menu, theme pickers) to contrast with background color
  * @todo Add color format name changer https://github.com/scttcper/tinycolor and https://slimselectjs.com/
  * @todo Highlight color name format to "defaultColorNameFormat" constant on startup (done)
  */
@@ -20,7 +19,7 @@ import { themePicker } from "./themePicker.js"
 	themePicker()
 
 	//	Initialize slimSelect color name format selector and define what to do when the format changes
-	const select = new slimSelect({
+	new slimSelect({
 		select: "#format",
 		settings: { showSearch: false },
 		events: { afterChange: (newVal: slimSelect) => setColorNameFormat(newVal[0].value) }
@@ -29,27 +28,9 @@ import { themePicker } from "./themePicker.js"
 	//	Define valid color name formats and default color name format and automatically select it in the menu
 	const validColorNameFormats = ["rgb", "prgb", "hex6", "hsl", "hsv", "off"]
 	const defaultColorNameFormat = "rgb"
-	select.setSelected(defaultColorNameFormat)
 
 	//	Define theme picker buttons
 	const themePickerButtons = document.querySelectorAll(".theme-picker button") as NodeListOf<HTMLButtonElement>
-
-	//	Define what to do when the theme picker buttons are clicked
-	const boxes = document.body.querySelectorAll(".box:nth-child(n+2)") as NodeListOf<HTMLDivElement>
-	for (let i = 0; i < boxes.length; i++) {
-		boxes[i].addEventListener('click', e => {
-			const style = window.getComputedStyle(e.target as Element);
-			const bgColor = style.getPropertyValue('background-color');
-			document.body.style.backgroundColor = bgColor;
-			themePickerButtons[0].style.textDecoration = "none"
-			themePickerButtons[1].style.textDecoration = "none"
-			themePickerButtons[2].style.textDecoration = "underline"
-		});
-	}
-
-	// const $colorPicker = document.getElementById('color-picker') as HTMLInputElement;
-	// // eslint-disable-next-line @typescript-eslint/no-explicit-any
-	// $colorPicker.addEventListener('change', (evt: any) => document.body.style.backgroundColor = evt.detail.rgba)
 
 	//	Define Dieter Ram colors
 	const drColors = [
@@ -67,7 +48,8 @@ import { themePicker } from "./themePicker.js"
 
 	const containers = document.querySelectorAll("body .container") as NodeListOf<HTMLDivElement>
 
-	//	Loop through all containers
+	//	Loop through all the boxes in all the containers and set their background color and text content
+	//	This forEach block is only run when the page refreshes
 	containers.forEach((container, outerIndex) => {
 		const boxes = container.getElementsByClassName("box") as HTMLCollectionOf<HTMLDivElement>
 			;[...boxes].forEach((box, innerIndex) => {
@@ -85,17 +67,45 @@ import { themePicker } from "./themePicker.js"
 			})
 	})
 
+	//	Define what to do when one of the color boxes are clicked
+	//	First, set the document body background color to the color of the box that was clicked
+	//	Second, set the text decoration of the theme picker buttons to none, and underline the third one
+	//	Third, set all the text color to an appropriate color to contrast with the new background color
+	const boxes = document.body.querySelectorAll(".box:nth-child(n+2)") as NodeListOf<HTMLDivElement>
+	const textElements = document.body.getElementsByClassName("text") as HTMLCollectionOf<HTMLDivElement>
+
+	for (let i = 0; i < boxes.length; i++) {
+		boxes[i].addEventListener('click', e => {
+			//	First:
+			const style = getComputedStyle(e.target as Element);
+			const bgColor = style.getPropertyValue('background-color');
+			document.body.style.backgroundColor = bgColor;
+			//	Second:
+			themePickerButtons[0].style.textDecoration = "none"
+			themePickerButtons[1].style.textDecoration = "none"
+			themePickerButtons[2].style.textDecoration = "underline"
+			//	Third:
+			const color = new TinyColor(bgColor)
+			const newColor = mostReadable(color, drColors.flat())
+			if (typeof newColor.toString("rgb") === "string")
+				[...textElements].forEach(textElement => textElement.style.color = newColor)
+		})
+	}
+
+	//	Define what to do when the the color name format changes
 	function setColorNameFormat(format: string) {
 		if (validColorNameFormats.includes(format)) {
-			const boxes = document.querySelectorAll(".box:nth-child(n+2)") as NodeListOf<HTMLDivElement>
-				;[...boxes].forEach(box => {
-					if (format === "off")
+			// const boxes = document.querySelectorAll(".box:nth-child(n+2)") as NodeListOf<HTMLDivElement>
+			const boxes = document.getElementsByClassName("box") as HTMLCollectionOf<HTMLDivElement>
+				;[...boxes].forEach((box, index) => {
+					const color = new TinyColor(box.style.backgroundColor)
+					const colorString = color.toString(format)
+					if (index === 0)
+						box.style.color = colorString
+					else if (format === "off")
 						box.textContent = ""
-					else {
-						const color = new TinyColor(box.style.backgroundColor)
-						const colorString = color.toString(format)
+					else
 						box.textContent = colorString
-					}
 				})
 		}
 	}
