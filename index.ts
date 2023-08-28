@@ -1,8 +1,5 @@
 /**
- * @todo Fix color ID to contrast well with card background color
- * @todo Fix font color outside of cards (e..g title, menu, theme pickers) to contrast with background color
- * @todo Add color format name changer https://github.com/scttcper/tinycolor and https://slimselectjs.com/
- * @todo Highlight color name format to "defaultColorNameFormat" constant on startup (done)
+ *
  */
 
 import { themePicker } from "./themePicker.js"
@@ -59,7 +56,7 @@ import slimSelect from "https://cdnjs.cloudflare.com/ajax/libs/slim-select/2.6.0
 					const color = drColors[outerIndex][innerIndex - 1]
 					box.style.backgroundColor = color
 					const colorObj = new TinyColor(color)
-					const contrastColor = mostReadable(colorObj, drColors[outerIndex])
+					const contrastColor = mostReadable(colorObj, drColorsFlat).toString(defaultColorNameFormat)
 					if (typeof contrastColor === "string")
 						box.style.color = contrastColor
 					box.textContent = colorObj.toString(defaultColorNameFormat)
@@ -91,8 +88,6 @@ import slimSelect from "https://cdnjs.cloudflare.com/ajax/libs/slim-select/2.6.0
 				[...textElements].forEach(textElement => textElement.style.color = newColor)
 		})
 	}
-
-	document.body.hidden = false
 
 	/**
 	 * @description Define what to do when the the color name format changes

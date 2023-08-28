@@ -34,7 +34,7 @@ import slimSelect from "https://cdnjs.cloudflare.com/ajax/libs/slim-select/2.6.0
                 const color = drColors[outerIndex][innerIndex - 1];
                 box.style.backgroundColor = color;
                 const colorObj = new TinyColor(color);
-                const contrastColor = mostReadable(colorObj, drColors[outerIndex]);
+                const contrastColor = mostReadable(colorObj, drColorsFlat).toString(defaultColorNameFormat);
                 if (typeof contrastColor === "string")
                     box.style.color = contrastColor;
                 box.textContent = colorObj.toString(defaultColorNameFormat);
@@ -57,7 +57,6 @@ import slimSelect from "https://cdnjs.cloudflare.com/ajax/libs/slim-select/2.6.0
                 [...textElements].forEach(textElement => textElement.style.color = newColor);
         });
     }
-    document.body.hidden = false;
     function setColorNameFormat(format) {
         if (validColorNameFormats.includes(format) === false) {
             console.error(`Invalid color name format: ${format}`);
