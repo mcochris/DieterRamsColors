@@ -103,6 +103,7 @@
 		"skipLibCheck": true /* Skip type checking all .d.ts files. */
 	},
 	"include": [
-		"*.ts"
+		"*.ts",
+		"js/themePicker.ts"
 	],
 }

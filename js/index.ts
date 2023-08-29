@@ -1,5 +1,10 @@
 /**
+ *	@fileOverview Dieter Rams color picker
+ *	@version 1.0.0
+ *	@license MIT
+ *	@see {@link https://twitter.com/cgpov/status/1211658818767261702?s=20|Twitter thread}
  *
+ *	@todo Theme picker does not reset font color when switching themes
  */
 
 import { themePicker } from "./themePicker.js"
@@ -44,32 +49,30 @@ import slimSelect from "https://cdnjs.cloudflare.com/ajax/libs/slim-select/2.6.0
 	const drColorsFlat = drColors.flat()
 
 	const containers = document.querySelectorAll("body .container") as NodeListOf<HTMLDivElement>
+	const boxes = document.body.getElementsByClassName("box") as HTMLCollectionOf<HTMLDivElement>
+	const textElements = document.body.getElementsByClassName("text") as HTMLCollectionOf<HTMLDivElement>
 
 	//	Loop through all the boxes in all the containers and set their background color and text content
 	//	This forEach block is only run when the page refreshes
 	containers.forEach((container, outerIndex) => {
 		const boxes = container.getElementsByClassName("box") as HTMLCollectionOf<HTMLDivElement>
-			;[...boxes].forEach((box, innerIndex) => {
-				if (innerIndex === 0)
-					box.textContent = `DR ${outerIndex + 1}`
-				else {
-					const color = drColors[outerIndex][innerIndex - 1]
-					box.style.backgroundColor = color
-					const colorObj = new TinyColor(color)
-					const contrastColor = mostReadable(colorObj, drColorsFlat).toString(defaultColorNameFormat)
-					if (typeof contrastColor === "string")
-						box.style.color = contrastColor
-					box.textContent = colorObj.toString(defaultColorNameFormat)
-				}
-			})
+		[...boxes].forEach((box, innerIndex) => {
+			const color = drColors[outerIndex][innerIndex]
+			box.style.backgroundColor = color
+			const colorObj = new TinyColor(color)
+			const contrastColor = mostReadable(colorObj, drColorsFlat).toString(defaultColorNameFormat)
+			if (typeof contrastColor === "string")
+				box.style.color = contrastColor
+			box.textContent = colorObj.toString(defaultColorNameFormat)
+			// }
+		})
 	})
 
 	//	Define what to do when one of the color boxes are clicked
 	//	First, set the document body background color to the color of the box that was clicked
 	//	Second, set the text decoration of the theme picker buttons to none, and underline the third one
 	//	Third, set all the text color to an appropriate color to contrast with the new background color
-	const boxes = document.body.querySelectorAll(".box:nth-child(n+2)") as NodeListOf<HTMLDivElement>
-	const textElements = document.body.getElementsByClassName("text") as HTMLCollectionOf<HTMLDivElement>
+	// const boxes = document.body.querySelectorAll(".box:nth-child(n+2)") as NodeListOf<HTMLDivElement>
 
 	for (let i = 0; i < boxes.length; i++) {
 		boxes[i].addEventListener('click', e => {

@@ -1,7 +1,7 @@
 {
 	"name": "dieter-rams-colors",
 	"version": "1.0.0",
-	"description": "Display color schemes used by Dieter Rams",
+	"description": "Display color schemes Dieter Rams might have used",
 	"license": "ISC",
 	"author": "Chris Strawser",
 	"main": "index.html",
