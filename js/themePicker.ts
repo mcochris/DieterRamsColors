@@ -1,5 +1,6 @@
-export function themePicker() {
+export default function themePicker() {
 	const themePickerButtons = document.querySelectorAll(".theme-picker button") as NodeListOf<HTMLButtonElement>
+	const textElements = document.body.getElementsByClassName("text") as HTMLCollectionOf<HTMLDivElement>
 
 	themePickerButtons[0].addEventListener("click", () => {
 		themePickerButtons[0].style.textDecoration = "underline"
@@ -9,6 +10,7 @@ export function themePicker() {
 			document.body.attributes.removeNamedItem("style")
 		document.body.classList.remove("dark-theme")
 		document.body.classList.add("light-theme")
+		setBodyTextColor("#261201")
 	})
 
 	themePickerButtons[1].addEventListener("click", () => {
@@ -19,5 +21,10 @@ export function themePicker() {
 			document.body.attributes.removeNamedItem("style")
 		document.body.classList.remove("light-theme")
 		document.body.classList.add("dark-theme")
+		setBodyTextColor("#dbddd0")
 	})
+
+	function setBodyTextColor(color: string): void {
+		[...textElements].forEach(textElement => textElement.style.color = color)
+	}
 }

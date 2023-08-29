@@ -7,13 +7,13 @@
  *	@todo Theme picker does not reset font color when switching themes
  */
 
-import { themePicker } from "./themePicker.js"
+import themePicker from "./themePicker.js"
 //	eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //	@ts-ignore
-import { TinyColor, mostReadable } from "https://cdn.jsdelivr.net/npm/@ctrl/tinycolor@4.0/+esm"
+import { TinyColor, mostReadable } from "./tinycolor.js"
 //	eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //	@ts-ignore
-import slimSelect from "https://cdnjs.cloudflare.com/ajax/libs/slim-select/2.6.0/slimselect.es.min.js"
+import slimSelect from "./slimselect.js"
 
 (() => {
 	//	Initialize theme picker
