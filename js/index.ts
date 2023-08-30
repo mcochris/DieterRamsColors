@@ -3,8 +3,6 @@
  *	@version 1.0.0
  *	@license MIT
  *	@see {@link https://twitter.com/cgpov/status/1211658818767261702?s=20|Twitter thread}
- *
- *	@todo Theme picker does not reset font color when switching themes
  */
 
 import themePicker from "./themePicker.js"
