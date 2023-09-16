@@ -1,26 +1,22 @@
 {
 	"name": "dieter-rams-colors",
+	"source": "index.html",
 	"version": "1.0.0",
 	"description": "Display color schemes Dieter Rams might have used",
-	"license": "ISC",
+	"license": "FreeBSD",
 	"author": "Chris Strawser",
-	"main": "index.html",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/mcochris/DieterRamsColors"
 	},
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
 	"type": "module",
 	"devDependencies": {
 		"@html-eslint/eslint-plugin": "^0.19.1",
-		"@html-eslint/parser": "^0.19.1",
 		"@types/node": "^20.5.1",
 		"@typescript-eslint/eslint-plugin": "^6.4.1",
-		"@typescript-eslint/parser": "^6.4.1",
 		"eslint": "^8.47.0",
 		"eslint-plugin-json": "^3.1.0",
 		"eslint-plugin-sonarjs": "^0.20.0"
-	}
+	},
+	"dependencies": {}
 }

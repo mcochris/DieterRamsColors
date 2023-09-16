@@ -1,7 +1,7 @@
 /**
  *	@fileOverview Dieter Rams color picker
  *	@version 1.0.0
- *	@license MIT
+ *	@license FreeBSD License
  *	@see {@link https://twitter.com/cgpov/status/1211658818767261702?s=20|Twitter thread}
  */
 
