@@ -1,31 +1,20 @@
 /**
  *	@fileOverview Dieter Rams color picker
  *	@version 1.0.0
- *	@license FreeBSD License
- *	@see @link https://twitter.com/cgpov/status/1211658818767261702?s=20
+ *	@license FreeBSD
  */
 
 import themePicker from "./themePicker.js"
 //	eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //	@ts-ignore
 import { TinyColor, mostReadable } from "./tinycolor.js"
-//	eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//	@ts-ignore
-import slimSelect from "./slimselect.js"
 
-(() => {
+{
 	//	Initialize theme picker
 	themePicker()
 
-	//	Initialize slimSelect color name format selector and define what to do when the format changes
-	new slimSelect({
-		select: "#format",
-		settings: { showSearch: false },
-		events: { afterChange: (newVal: slimSelect) => setColorNameFormat(newVal[0].value) }
-	})
-
-	//	Define valid color name formats and default color name format and automatically select it in the menu
-	const validColorNameFormats = ["rgb", "prgb", "hex6", "hsl", "hsv", "off"]
+	//	Define format picker buttons and default format
+	const formatPickerButtons = document.querySelectorAll(".format-picker button") as NodeListOf<HTMLButtonElement>
 	const defaultColorNameFormat = "rgb"
 
 	//	Define theme picker buttons
@@ -51,7 +40,6 @@ import slimSelect from "./slimselect.js"
 	const textElements = document.body.getElementsByClassName("text") as HTMLCollectionOf<HTMLDivElement>
 
 	//	Loop through all the boxes in all the containers and set their background color and text content
-	//	This forEach block is only run when the page refreshes
 	containers.forEach((container, outerIndex) => {
 		const boxes = container.getElementsByClassName("box") as HTMLCollectionOf<HTMLDivElement>
 		[...boxes].forEach((box, innerIndex) => {
@@ -62,7 +50,6 @@ import slimSelect from "./slimselect.js"
 			if (typeof contrastColor === "string")
 				box.style.color = contrastColor
 			box.textContent = colorObj.toString(defaultColorNameFormat)
-			// }
 		})
 	})
 
@@ -70,9 +57,7 @@ import slimSelect from "./slimselect.js"
 	//	First, set the document body background color to the color of the box that was clicked
 	//	Second, set the text decoration of the theme picker buttons to none, and underline the third one
 	//	Third, set all the text color to an appropriate color to contrast with the new background color
-	// const boxes = document.body.querySelectorAll(".box:nth-child(n+2)") as NodeListOf<HTMLDivElement>
-
-	for (let i = 0; i < boxes.length; i++) {
+	for (let i = 0; i < boxes.length; i++)
 		boxes[i].addEventListener('click', e => {
 			//	First:
 			const style = getComputedStyle(e.target as Element);
@@ -87,29 +72,43 @@ import slimSelect from "./slimselect.js"
 			const newColor = mostReadable(color, drColorsFlat)
 			if (typeof newColor.toString("rgb") === "string")
 				[...textElements].forEach(textElement => textElement.style.color = newColor)
+			//	Change the font color and background of the format pull-down selector
+			document.querySelector(".format-picker")?.setAttribute("style", `--ss-font-color: ${newColor}`)
 		})
-	}
 
-	/**
-	 * @description Define what to do when the the color name format changes
-	 * @param format string, the new color name format (e.g. "rgb", "hex6", "off")
-	 * @returns void
-	 * @example setColorNameFormat("rgb")
-	 */
-	function setColorNameFormat(format: string): void {
-		if (validColorNameFormats.includes(format) === false) {
-			console.error(`Invalid color name format: ${format}`)
-			return
-		}
-		[...boxes].forEach(box => {
-			if (format === "off")
-				box.textContent = ""
-			else {
-				const color = new TinyColor(box.style.backgroundColor)
-				const newColor = mostReadable(color, drColorsFlat)
-				box.style.color = newColor.toString(format)
-				box.textContent = newColor.toString(format)
+	//	Define what to do when one of the format picker buttons are clicked
+	//	First, set the text decoration of the default format underline and all the others to none
+	//	Second, add a eventlistener to each format button
+	//	Third, set the text decoration of all the format buttons to "none" to un-underline previous selection
+	//	Fourth, set the text decoration of the format button that was clicked to "underline"
+	//	Fifth, loop through all the boxes and set the text content to the selected format
+	for (let i = 0; i < formatPickerButtons.length; i++) {
+		if (formatPickerButtons[i].value === defaultColorNameFormat)
+			formatPickerButtons[i].style.textDecoration = "underline"
+		else
+			formatPickerButtons[i].style.textDecoration = "none"
+
+		formatPickerButtons[i].addEventListener("click", e => {
+			const format = (e.target as HTMLButtonElement).value;
+			if (format === undefined) {
+				console.error("Invalid color name format")
+				return
 			}
+
+			for (let i = 0; i < formatPickerButtons.length; i++)
+				formatPickerButtons[i].style.textDecoration = "none";
+
+			(e.target as HTMLButtonElement).style.textDecoration = "underline"
+				;[...boxes].forEach(box => {
+					if (format === "off")
+						box.textContent = ""
+					else {
+						const color = new TinyColor(box.style.backgroundColor)
+						const newColor = mostReadable(color, drColorsFlat)
+						box.style.color = newColor.toString(format)
+						box.textContent = newColor.toString(format)
+					}
+				})
 		})
 	}
-})()
+}

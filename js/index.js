@@ -1,14 +1,8 @@
 import themePicker from "./themePicker.js";
 import { TinyColor, mostReadable } from "./tinycolor.js";
-import slimSelect from "./slimselect.js";
-(() => {
+{
     themePicker();
-    new slimSelect({
-        select: "#format",
-        settings: { showSearch: false },
-        events: { afterChange: (newVal) => setColorNameFormat(newVal[0].value) }
-    });
-    const validColorNameFormats = ["rgb", "prgb", "hex6", "hsl", "hsv", "off"];
+    const formatPickerButtons = document.querySelectorAll(".format-picker button");
     const defaultColorNameFormat = "rgb";
     const themePickerButtons = document.querySelectorAll(".theme-picker button");
     const drColors = [
@@ -39,7 +33,7 @@ import slimSelect from "./slimselect.js";
             box.textContent = colorObj.toString(defaultColorNameFormat);
         });
     });
-    for (let i = 0; i < boxes.length; i++) {
+    for (let i = 0; i < boxes.length; i++)
         boxes[i].addEventListener('click', e => {
             const style = getComputedStyle(e.target);
             const bgColor = style.getPropertyValue('background-color');
@@ -51,23 +45,33 @@ import slimSelect from "./slimselect.js";
             const newColor = mostReadable(color, drColorsFlat);
             if (typeof newColor.toString("rgb") === "string")
                 [...textElements].forEach(textElement => textElement.style.color = newColor);
+            document.querySelector(".format-picker")?.setAttribute("style", `--ss-font-color: ${newColor}`);
         });
-    }
-    function setColorNameFormat(format) {
-        if (validColorNameFormats.includes(format) === false) {
-            console.error(`Invalid color name format: ${format}`);
-            return;
-        }
-        [...boxes].forEach(box => {
-            if (format === "off")
-                box.textContent = "";
-            else {
-                const color = new TinyColor(box.style.backgroundColor);
-                const newColor = mostReadable(color, drColorsFlat);
-                box.style.color = newColor.toString(format);
-                box.textContent = newColor.toString(format);
+    for (let i = 0; i < formatPickerButtons.length; i++) {
+        if (formatPickerButtons[i].value === defaultColorNameFormat)
+            formatPickerButtons[i].style.textDecoration = "underline";
+        else
+            formatPickerButtons[i].style.textDecoration = "none";
+        formatPickerButtons[i].addEventListener("click", e => {
+            const format = e.target.value;
+            if (format === undefined) {
+                console.error("Invalid color name format");
+                return;
             }
+            for (let i = 0; i < formatPickerButtons.length; i++)
+                formatPickerButtons[i].style.textDecoration = "none";
+            e.target.style.textDecoration = "underline";
+            [...boxes].forEach(box => {
+                if (format === "off")
+                    box.textContent = "";
+                else {
+                    const color = new TinyColor(box.style.backgroundColor);
+                    const newColor = mostReadable(color, drColorsFlat);
+                    box.style.color = newColor.toString(format);
+                    box.textContent = newColor.toString(format);
+                }
+            });
         });
     }
-})();
+}
 //# sourceMappingURL=index.js.map
