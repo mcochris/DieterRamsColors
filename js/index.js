@@ -45,7 +45,6 @@ import { TinyColor, mostReadable } from "./tinycolor.js";
             const newColor = mostReadable(color, drColorsFlat);
             if (typeof newColor.toString("rgb") === "string")
                 [...textElements].forEach(textElement => textElement.style.color = newColor);
-            document.querySelector(".format-picker")?.setAttribute("style", `--ss-font-color: ${newColor}`);
         });
     for (let i = 0; i < formatPickerButtons.length; i++) {
         if (formatPickerButtons[i].value === defaultColorNameFormat)

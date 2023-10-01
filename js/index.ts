@@ -73,7 +73,6 @@ import { TinyColor, mostReadable } from "./tinycolor.js"
 			if (typeof newColor.toString("rgb") === "string")
 				[...textElements].forEach(textElement => textElement.style.color = newColor)
 			//	Change the font color and background of the format pull-down selector
-			document.querySelector(".format-picker")?.setAttribute("style", `--ss-font-color: ${newColor}`)
 		})
 
 	//	Define what to do when one of the format picker buttons are clicked
