@@ -17,7 +17,7 @@ body {
 	font-family: Brandon, sans-serif;
 	color: var(--text-color);
 	background-color: var(--body-background);
-	margin: 2%;
+	margin: 1% 2%;
 	padding: 0;
 }
 
@@ -30,30 +30,15 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	align-items: baseline;
 	margin-bottom: 2%;
+	align-items: baseline;
 }
 
-.title {
-	font-size: 2em;
-}
-
-.format-picker {
-	--ss-bg-color: transparent;
-	--ss-font-color: var(--text-color);
-	--ss-border-color: transparent;
-	margin-top: -.5%;
-}
-
-.format-option {
-	background-color: var(--body-background);
-	color: var(--text-color);
-}
-
-.theme-picker button {
+.theme-picker button,
+.format-picker button {
+	padding: 0 .35rem;
 	background: transparent;
 	border: none;
-	padding: 0;
 	cursor: pointer;
 	color: var(--text-color);
 }
