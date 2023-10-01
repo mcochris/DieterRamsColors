@@ -12,11 +12,12 @@
 	"type": "module",
 	"devDependencies": {
 		"@html-eslint/eslint-plugin": "^0.19.1",
+		"@parcel/compressor-brotli": "^2.9.3",
 		"@types/node": "^20.5.1",
 		"@typescript-eslint/eslint-plugin": "^6.4.1",
 		"eslint": "^8.47.0",
 		"eslint-plugin-json": "^3.1.0",
-		"eslint-plugin-sonarjs": "^0.20.0"
-	},
-	"dependencies": {}
+		"eslint-plugin-sonarjs": "^0.20.0",
+		"parcel": "^2.9.3"
+	}
 }
