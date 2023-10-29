@@ -1,3 +1,4 @@
+"use strict";
 {
     const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
     const themePickerButtons = document.querySelectorAll(".theme-picker button");
@@ -10,5 +11,4 @@
         themePickerButtons[0].style.textDecoration = "underline";
     }
 }
-export {};
 //# sourceMappingURL=setInitialColorTheme.js.map
