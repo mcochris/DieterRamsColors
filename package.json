@@ -5,10 +5,6 @@
 	"description": "Display color schemes Dieter Rams might have used",
 	"license": "FreeBSD",
 	"author": "Chris Strawser",
-	"scripts": {
-		"start": "parcel",
-		"build": "parcel build"
-	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/mcochris/DieterRamsColors"
@@ -16,15 +12,9 @@
 	"type": "module",
 	"devDependencies": {
 		"@html-eslint/eslint-plugin": "latest",
-		"@parcel/compressor-brotli": "latest",
-		"@types/node": "latest",
 		"@typescript-eslint/eslint-plugin": "latest",
 		"eslint": "latest",
 		"eslint-plugin-json": "latest",
-		"eslint-plugin-sonarjs": "latest",
-		"parcel": "latest"
-	},
-	"dependencies": {
-		"@ctrl/tinycolor": "^4.0.2"
+		"eslint-plugin-sonarjs": "latest"
 	}
 }
