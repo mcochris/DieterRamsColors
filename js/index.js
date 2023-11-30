@@ -1,7 +1,7 @@
 import themePicker from "./themePicker.js";
 //	https://github.com/bgrins/TinyColor
 //	@ts-expect-error - tinycolor2 is not a module
-import tinycolor from "https://cdn.jsdelivr.net/npm/tinycolor2/+esm";
+import tinycolor from "./tinycolor2.js";
 { //	Initialize theme picker
     themePicker();
     //	Define format picker buttons and default format

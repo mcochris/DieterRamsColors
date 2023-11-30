@@ -1,6 +1,10 @@
 @font-face {
 	font-family: "Brandon";
-	src: url("../fonts/Brandon_reg.otf") format("opentype");
+	font-style: normal;
+	font-weight: 400;
+	/* src: url("../fonts/Brandon_reg.otf") format("opentype"); */
+	src: local("Brandon"), url("../fonts/Brandon_reg.otf") format("opentype");
+	font-display: swap;
 }
 
 .dark-theme {
