@@ -76,9 +76,10 @@ import tinycolor from "./tinycolor2.js"
 			themePickerButtons[1].style.textDecoration = "none"
 			themePickerButtons[2].style.textDecoration = "underline"
 			//	Third:
-			const color = new tinycolor(bgColor)
-			const newColor = tinycolor.mostReadable(color, drColors.flat()).toString();
-			[...textElements].forEach(textElement => textElement.style.color = newColor.toString("rgb"))
+                        const color = new tinycolor(bgColor)
+                        const readableColor = tinycolor.mostReadable(color, drColors.flat())
+                        const rgb = readableColor.toString("rgb")
+                        [...textElements].forEach(textElement => textElement.style.color = rgb)
 		})
 
 	//	Define what to do when one of the format picker buttons are clicked
