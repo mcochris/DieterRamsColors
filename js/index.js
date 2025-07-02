@@ -9,7 +9,7 @@ import tinycolor from "./tinycolor2.js";
     const defaultColorNameFormat = "rgb";
     //	Define theme picker buttons
     const themePickerButtons = document.querySelectorAll(".theme-picker button");
-    //	Define Dieter Ram colors
+    //	Define Dieter Rams colors
     const drColors = [
         ["#aab7bf", "#736356", "#bfb1a8", "#ad1d1d", "#261201"],
         ["#84754a", "#3a3124", "#96937d", "#b9ada4", "#0d0000"],
@@ -22,7 +22,7 @@ import tinycolor from "./tinycolor2.js";
         ["#c5441f", "#f07032", "#40341f", "#8b8178", "#d9cab8"],
         ["#0d703f", "#f1b73a", "#e6423a", "#5b4a3b", "#d3d8d2"]
     ];
-    //	Text colors for each Dieter Ram color box
+    //	Text colors for each Dieter Rams color box
     const drColorsText = [
         ["#0d0000", "#e1e4e1", "#0d0000", "#e1e4e1", "#e1e4e1"],
         ["#0d0000", "#e1e4e1", "#0d0000", "#0d0000", "#e1e4e1"],
