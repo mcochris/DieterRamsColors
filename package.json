@@ -1,20 +1,28 @@
 {
-	"name": "dieter-rams-colors",
-	"source": "index.html",
-	"version": "1.1.0",
-	"description": "Display color schemes Dieter Rams might have used",
-	"license": "FreeBSD",
-	"author": "Chris Strawser",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/mcochris/DieterRamsColors"
-	},
-	"type": "module",
-	"devDependencies": {
-		"@html-eslint/eslint-plugin": "latest",
-		"@typescript-eslint/eslint-plugin": "latest",
-		"eslint": "latest",
-		"eslint-plugin-json": "latest",
-		"eslint-plugin-sonarjs": "latest"
-	}
+        "name": "dieter-rams-colors",
+        "source": "index.html",
+        "version": "1.1.0",
+        "description": "Display color schemes Dieter Rams might have used",
+        "license": "FreeBSD",
+        "author": "Chris Strawser",
+        "repository": {
+                "type": "git",
+                "url": "https://github.com/mcochris/DieterRamsColors"
+        },
+        "type": "module",
+        "devDependencies": {
+                "@html-eslint/eslint-plugin": "latest",
+                "@types/jest": "^30.0.0",
+                "@typescript-eslint/eslint-plugin": "latest",
+                "eslint": "latest",
+                "eslint-plugin-json": "latest",
+                "eslint-plugin-sonarjs": "latest",
+                "jest": "^30.0.3",
+                "jest-environment-jsdom": "^30.0.2",
+                "jsdom": "^26.1.0",
+                "ts-jest": "^29.4.0"
+        },
+        "scripts": {
+                "test": "jest"
+        }
 }
