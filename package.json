@@ -14,7 +14,6 @@
 		"@html-eslint/eslint-plugin": "latest",
 		"@typescript-eslint/eslint-plugin": "latest",
 		"eslint": "latest",
-		"eslint-plugin-json": "latest",
-		"eslint-plugin-sonarjs": "latest"
+		"eslint-plugin-json": "latest"
 	}
 }
