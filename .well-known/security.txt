@@ -1,0 +1,4 @@
+Contact: mailto:security@mcochris.com
+Expires: 2026-12-31T05:00:00.000Z
+Preferred-Languages: en
+Policy: https://github.com/mcochris/recording-analyzer-webpage/blob/main/SECURITY.md
